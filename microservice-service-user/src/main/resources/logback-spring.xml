@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+  <property name="LOG_PATH" value="/var/log/microservice"/>
+  <property name="FILE_LOG_PATTERN"
+    value="%d{yyyy-MM-dd HH:mm:ss.SSS}【%X{user}】 [%thread] %-5level %logger{50} - %msg%n"/>
+  <property name="maxHistory" value="30"/>
+
+  <appender name="FILE_TIME_BASE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <encoder>
+      <pattern>${FILE_LOG_PATTERN}</pattern>
+    </encoder>
+    <File>${LOG_PATH}/microservice-service-user.log</File>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>${LOG_PATH}/microservice-service-user.%d{yyyy-MM-dd}.log</FileNamePattern>
+      <maxHistory>${maxHistory}</maxHistory>
+    </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <MaxFileSize>10MB</MaxFileSize>
+    </triggeringPolicy>
+  </appender>
+
+  <logger name="com.microservice" level="debug" />
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="FILE_TIME_BASE"/>
+  </root>
+</configuration>

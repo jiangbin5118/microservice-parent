@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: microservice-service-user
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+server:
+  port: 28001
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: jiangbin
+    password: 10
+
+eureka:
+  instance:
+    hostname: localhost1
+  client:
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@localhost1:8001/eureka/,http://${security.user.name}:${security.user.password}@localhost2:8002/eureka/
+
+management:
+  security:
+    enabled: false
+
+microservice-service-user:
+  ribbion:
+    ConnectTimeout: 250
+    ReadTimeout: 1000
+    OkToRetryOnAllOperations: true
+    MaxAutoRetriesNextServer: 2
+    MaxAutoRetries: 1

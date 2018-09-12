@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: microservice-gateway
+
+server:
+  port: 18001
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: jiangbin
+    password: 10
+
+eureka:
+  instance:
+    hostname: localhost1
+  client:
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@localhost1:8001/eureka/,http://${security.user.name}:${security.user.password}@localhost2:8002/eureka/,http://${security.user.name}:${security.user.password}@localhost3:8003/eureka/
